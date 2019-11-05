@@ -1,0 +1,70 @@
+<!-- <app-nav></app-nav>
+ <app-home></app-home> -->
+<app-nav></app-nav>
+<div class="row" *ngIf="!loggedIn()">
+  <div class="col-6 mt-5 ml-5"><app-register></app-register></div>
+  <div class="col-6"></div>
+</div>
+
+<div *ngIf="loggedIn()">
+  <dx-data-grid
+    id="gridContainer"
+    [dataSource]="toDos"
+    [columns]="['name', 'description', 'deadline', 'statuId']"
+    [showBorders]="true"
+    [masterDetail]="{ enabled: true, template: 'subToDo' }"
+    (onRowInserted)="onRowInserted($event)"
+    (onRowRemoved)="onRowRemoved($event)"
+    (onRowUpdated)="onRowUpdated($event)"
+  >
+    <dxi-column dataField="name" caption="To-Do"></dxi-column>
+    <dxi-column dataField="description" caption="Description"></dxi-column>
+    <dxi-column
+      dataField="deadline"
+      caption="Deadline"
+      dataType="date"
+    ></dxi-column>
+
+    <dxi-column dataField="statuId" caption="Status">
+      <dxo-lookup [dataSource]="status" valueExpr="id" displayExpr="name">
+      </dxo-lookup>
+    </dxi-column>
+
+    <dxo-filter-row [visible]="true"></dxo-filter-row>
+    <dxo-header-filter [visible]="true"></dxo-header-filter>
+    <dxo-editing
+      mode="cell"
+      [allowAdding]="true"
+      [allowUpdating]="true"
+      [allowDeleting]="true"
+      [useIcons]="true"
+    >
+    </dxo-editing>
+
+    <div *dxTemplate="let data of 'subToDo'">
+      <dx-data-grid
+        id="gridContainer"
+        [dataSource]="data.data.subToDo"
+        [columns]="['Name', 'Description']"
+        [showBorders]="true"
+      >
+        <dxi-column dataField="name" caption="Name"></dxi-column>
+        <dxi-column dataField="description" caption="Description"></dxi-column>
+        <dxi-column dataField="statuId" caption="Status">
+          <dxo-lookup [dataSource]="status" valueExpr="id" displayExpr="name">
+          </dxo-lookup>
+        </dxi-column>
+        <dxo-filter-row [visible]="true"></dxo-filter-row>
+        <dxo-header-filter [visible]="true"></dxo-header-filter>
+        <dxo-editing
+          mode="cell"
+          [allowAdding]="true"
+          [allowUpdating]="true"
+          [allowDeleting]="true"
+          [useIcons]="true"
+        >
+        </dxo-editing>
+      </dx-data-grid>
+    </div>
+  </dx-data-grid>
+</div>

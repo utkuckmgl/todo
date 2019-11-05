@@ -1,0 +1,18 @@
+<dx-data-grid
+      id="gridContainer"
+      [dataSource]="customers"
+      [columns]="['CompanyName', 'City', 'State', 'Phone', 'Fax']"
+      [showBorders]="true"
+    >
+      <dxo-filter-row [visible]="true"></dxo-filter-row>
+      <dxo-header-filter [visible]="true"></dxo-header-filter>
+      <dxo-editing
+        mode="popup"
+        [allowAdding]="true"
+        [allowUpdating]="true"
+        [allowDeleting]="true"
+        [useIcons]="true"
+      >
+      </dxo-editing>
+    </dx-data-grid>
+
